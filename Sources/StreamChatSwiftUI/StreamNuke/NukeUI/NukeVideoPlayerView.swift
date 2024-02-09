@@ -101,7 +101,7 @@ final class NukeVideoPlayerView: _PlatformBaseView {
             object: player?.currentItem
         )
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(applicationWillEnterForeground),
@@ -124,7 +124,9 @@ final class NukeVideoPlayerView: _PlatformBaseView {
         let playerItem = AVPlayerItem(asset: asset)
         let player = AVQueuePlayer(playerItem: playerItem)
         player.isMuted = true
+#if !os(visionOS)
         player.preventsDisplaySleepDuringVideoPlayback = false
+#endif
         player.actionAtItemEnd = isLooping ? .none : .pause
         self.player = player
 

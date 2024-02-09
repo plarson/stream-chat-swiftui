@@ -97,6 +97,7 @@ struct FilePickerDisplayView: View {
     }
 }
 
+#if !os(visionOS)
 /// View displayed when the camera picker is shown.
 struct CameraPickerDisplayView: View {
     @Binding var selectedPickerState: AttachmentPickerState
@@ -116,6 +117,7 @@ struct CameraPickerDisplayView: View {
             }
     }
 }
+#endif
 
 /// View displayed when there's no access permission to the photo library.
 struct AssetsAccessPermissionView: View {

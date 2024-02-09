@@ -60,6 +60,7 @@ struct ReactionsOverlayContainer: View {
 
 public extension ChatMessage {
 
+    #if !os(visionOS)
     func reactionOffsetX(
         for contentRect: CGRect,
         availableWidth: CGFloat = UIScreen.main.bounds.width,
@@ -81,6 +82,29 @@ public extension ChatMessage {
             return contentRect.origin.x - originX
         }
     }
+    #else
+    func reactionOffsetX(
+        for contentRect: CGRect,
+        availableWidth: CGFloat = 320,
+        reactionsSize: CGFloat
+    ) -> CGFloat {
+        if isRightAligned {
+            var originX = contentRect.origin.x - reactionsSize / 2
+            let total = originX + reactionsSize
+            if total > availableWidth {
+                originX = availableWidth - reactionsSize
+            }
+            return -(contentRect.origin.x - originX)
+        } else {
+            if contentRect.width < reactionsSize {
+                return (reactionsSize - contentRect.width) / 2
+            }
+
+            let originX = contentRect.origin.x - reactionsSize / 2
+            return contentRect.origin.x - originX
+        }
+    }
+    #endif
 }
 
 public struct ReactionsAnimatableView: View {

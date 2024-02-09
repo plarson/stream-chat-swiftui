@@ -212,10 +212,12 @@ extension UIImage {
 
         var displayRefreshFactors = [Int]()
 
+        #if !os(visionOS)
         if #available(iOS 10.3, *) {
           // Will be 120 on devices with ProMotion display, 60 otherwise.
           displayRefreshFactors.append(UIScreen.main.maximumFramesPerSecond)
         }
+        #endif
 
         if let first = displayRefreshFactors.first, first != 60 {
           // Append 60 if needed.

@@ -43,10 +43,12 @@ extension View {
         }
     }
 
+    #if !os(visionOS)
     /// Method for making a haptic feedback.
     /// - Parameter style: feedback style
     func triggerHapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
     }
+    #endif
 }

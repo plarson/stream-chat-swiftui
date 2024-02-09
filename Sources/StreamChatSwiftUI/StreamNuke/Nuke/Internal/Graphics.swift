@@ -4,7 +4,7 @@
 
 import Foundation
 
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 import UIKit
 #endif
 
@@ -33,7 +33,7 @@ struct ImageProcessingExtensions {
         guard let cgImage = image.cgImage else {
             return nil
         }
-        #if os(iOS) || os(tvOS) || os(watchOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
         let targetSize = targetSize.rotatedForOrientation(image.imageOrientation)
         #endif
         let scale = cgImage.size.getScale(targetSize: targetSize, contentMode: contentMode)
@@ -146,7 +146,7 @@ extension PlatformImage {
 
     /// Decompresses the input image by drawing in the the `CGContext`.
     func decompressed(isUsingPrepareForDisplay: Bool) -> PlatformImage? {
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
         if isUsingPrepareForDisplay, #available(iOS 15.0, tvOS 15.0, *) {
             return preparingForDisplay()
         }
@@ -224,7 +224,7 @@ extension CGSize {
     }
 }
 
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 private extension CGSize {
     func rotatedForOrientation(_ imageOrientation: UIImage.Orientation) -> CGSize {
         switch imageOrientation {
@@ -295,6 +295,8 @@ enum Screen {
 #elseif os(watchOS)
     /// Returns the current screen scale.
     static let scale: CGFloat = WKInterfaceDevice.current().screenScale
+#elseif os(visionOS)
+    static let scale: CGFloat = 8
 #elseif os(macOS)
     /// Always returns 1.
     static let scale: CGFloat = 1

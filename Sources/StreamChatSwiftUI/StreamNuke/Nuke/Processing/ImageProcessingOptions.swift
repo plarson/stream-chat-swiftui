@@ -4,7 +4,7 @@
 
 import Foundation
 
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 import UIKit
 #endif
 
@@ -37,7 +37,7 @@ enum ImageProcessingOptions: Sendable {
     struct Border: Hashable, CustomStringConvertible, @unchecked Sendable {
         let width: CGFloat
 
-        #if os(iOS) || os(tvOS) || os(watchOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
         let color: UIColor
 
         /// - parameters:

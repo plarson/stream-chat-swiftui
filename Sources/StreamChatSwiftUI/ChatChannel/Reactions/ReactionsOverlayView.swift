@@ -13,7 +13,11 @@ public struct ReactionsOverlayView<Factory: ViewFactory>: View {
 
     @State private var popIn = false
     @State private var willPopOut = false
+    #if os(visionOS)
+    @State private var screenHeight = 420.0
+    #else
     @State private var screenHeight = UIScreen.main.bounds.size.height
+    #endif
     @State private var screenWidth: CGFloat?
     @State private var initialWidth: CGFloat?
     @State private var orientationChanged = false
@@ -293,7 +297,11 @@ public struct ReactionsOverlayView<Factory: ViewFactory>: View {
     
     private var spacing: CGFloat {
         let divider: CGFloat = isIPad ? 2 : 1
-        let spacing = (UIScreen.main.bounds.height - screenHeight) / divider
+        #if !os(visionOS)
+            let spacing = (UIScreen.main.bounds.height - screenHeight) / divider
+        #else
+        let spacing = 10.0
+        #endif
         return spacing > 0 ? spacing : 0
     }
 
@@ -353,9 +361,11 @@ struct DeviceRotationViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onAppear()
+        #if !os(visionOS)
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                 action(UIDevice.current.orientation)
             }
+        #endif
     }
 }
 

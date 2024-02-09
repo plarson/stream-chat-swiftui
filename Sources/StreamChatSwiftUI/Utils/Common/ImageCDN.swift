@@ -68,7 +68,11 @@ open class StreamImageCDN: ImageCDN {
             host.contains(StreamImageCDN.streamCDNURL)
         else { return originalURL }
 
+        #if os(visionOS)
+        let scale = 8.0
+        #else
         let scale = UIScreen.main.scale
+        #endif
         components.queryItems = components.queryItems ?? []
         components.queryItems?.append(contentsOf: [
             URLQueryItem(name: "w", value: String(format: "%.0f", preferredSize.width * scale)),

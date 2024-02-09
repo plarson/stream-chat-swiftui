@@ -14,11 +14,15 @@ struct GridPhotosView: View {
     private static let spacing: CGFloat = 2
 
     private static var itemWidth: CGFloat {
+#if !os(visionOS)
         if UIDevice.current.userInterfaceIdiom == .phone {
             return (UIScreen.main.bounds.size.width / 3) - spacing * 3
         } else {
             return 120
         }
+#else
+        return 120
+#endif
     }
 
     private let columns = [GridItem(.adaptive(minimum: itemWidth), spacing: spacing)]

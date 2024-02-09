@@ -64,6 +64,7 @@ final class ImagePickerCoordinator: NSObject, UIImagePickerControllerDelegate, U
             )
             parent.onAssetPicked(addedImage)
         } else if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+            #if !os(visionOS)
             do {
                 let asset = AVURLAsset(url: videoURL, options: nil)
                 let imageGenerator = AVAssetImageGenerator(asset: asset)
@@ -83,6 +84,7 @@ final class ImagePickerCoordinator: NSObject, UIImagePickerControllerDelegate, U
             } catch {
                 log.debug("Error generating thumbnail: \(error.localizedDescription)")
             }
+            #endif
         }
 
         dismiss()

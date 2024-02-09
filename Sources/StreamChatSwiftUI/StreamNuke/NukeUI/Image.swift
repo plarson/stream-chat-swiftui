@@ -40,7 +40,7 @@ struct NukeImage: NSViewRepresentable {
         updateImageView(imageView)
     }
 }
-#elseif os(iOS) || os(tvOS)
+#elseif os(iOS) || os(tvOS) || os(visionOS)
 /// Displays images. Supports animated images and video playback.
 @MainActor
 struct NukeImage: UIViewRepresentable {
@@ -72,7 +72,7 @@ struct NukeImage: UIViewRepresentable {
 }
 #endif
 
-#if os(macOS) || os(iOS) || os(tvOS)
+#if os(macOS) || os(iOS) || os(tvOS) || os(visionOS)
 extension NukeImage {
     func updateImageView(_ imageView: ImageView) {
         if imageView.imageContainer?.image !== imageContainer.image {

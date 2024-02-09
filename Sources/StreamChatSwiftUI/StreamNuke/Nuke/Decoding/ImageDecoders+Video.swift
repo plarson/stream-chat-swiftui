@@ -44,10 +44,14 @@ extension ImageDecoders {
 private func makePreview(for data: Data, type: NukeAssetType) -> PlatformImage? {
     let asset = AVDataAsset(data: data, type: type)
     let generator = AVAssetImageGenerator(asset: asset)
+    #if os(visionOS)
+    return nil
+    #else
     guard let cgImage = try? generator.copyCGImage(at: CMTime(value: 0, timescale: 1), actualTime: nil) else {
         return nil
     }
     return PlatformImage(cgImage: cgImage)
+    #endif
 }
 
 #endif

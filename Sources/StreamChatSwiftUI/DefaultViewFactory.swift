@@ -728,11 +728,15 @@ extension ViewFactory {
         cameraPickerShown: Binding<Bool>,
         cameraImageAdded: @escaping (AddedAsset) -> Void
     ) -> some View {
+        #if os(visionOS)
+        EmptyView()
+        #else
         CameraPickerDisplayView(
             selectedPickerState: selected,
             cameraPickerShown: cameraPickerShown,
             cameraImageAdded: cameraImageAdded
         )
+        #endif
     }
     
     public func makeAssetsAccessPermissionView() -> some View {

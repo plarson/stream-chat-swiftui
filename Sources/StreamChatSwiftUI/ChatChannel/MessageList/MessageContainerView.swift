@@ -312,7 +312,9 @@ public struct MessageContainerView<Factory: ViewFactory>: View {
         }
 
         if offsetX > replyThreshold && quotedMessage != message {
+            #if !os(visionOS)
             triggerHapticFeedback(style: .medium)
+            #endif
             withAnimation {
                 quotedMessage = message
             }
@@ -336,7 +338,9 @@ public struct MessageContainerView<Factory: ViewFactory>: View {
         computeFrame = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             computeFrame = false
+            #if !os(visionOS)
             triggerHapticFeedback(style: .medium)
+            #endif
             onLongPress(
                 MessageDisplayInfo(
                     message: message,
